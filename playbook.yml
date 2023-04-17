@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  gather_facts: True
+
+  vars:
+    - username: Marcel Tozser
+    - className: CPRG217
+
+  tasks:
+    - name: Write message to File
+      raw: echo "Wrote this file from Controller, {{username}}, {{className}}" > AdminMessage.txt
+
+    - name: Show Variables
+      debug:
+        msg: "Username: {{ username }}, Class: {{ className }}"
+
+    
+    - name: Creating a file with content
+      copy:
+        dest: "/home/NewFile.txt"
+        content: |
+          line 01
+          line 02
+
+    - name: Install latest version of Apache
+      apt: name=apache2 update_cache=yes state=latest
